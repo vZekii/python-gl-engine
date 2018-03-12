@@ -1,10 +1,13 @@
 from pyglet.gl import *
 
+import model
+
 
 class Window(pyglet.window.Window):
 
     def __init__(self, width, height, title='', resizable=False):
         super(Window, self).__init__(width, height, title, resizable)
+        self.model = model.Obj('test_models/ak.obj', 'test_models/ak.mtl')
 
     @staticmethod
     def set_projection():
@@ -29,6 +32,9 @@ class Window(pyglet.window.Window):
     def on_draw(self):
         self.clear()
         self.set3d()
+
+        glTranslatef(0, 0, -10)  # Move the camera back to see the model
+        self.model.batch.draw()
 
 
 if __name__ == '__main__':
