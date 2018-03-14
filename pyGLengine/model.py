@@ -5,6 +5,11 @@ from pyglet.gl import *
 
 class Obj(object):
     def __init__(self, object_file, material_file=None):
+        """
+        An object for storing information of a single model
+        :param object_file: the .obj file path of the model
+        :param material_file: the .mtl file path of the model
+        """
         self.file = object_file
         self.batch = pyglet.graphics.Batch()  # This will work for now, but it will be changed later
         self.vertex_list, self.normals = [], []  # Extracting vertices from a .obj file
@@ -15,6 +20,9 @@ class Obj(object):
         self.import_model()
 
     def import_model(self):
+        """
+        Reads the .obj file and records the data
+        """
         diffuse_val = (0.0, 0.0, 0.0)
         for line in open(self.file):
             data = list(filter(None, line.rstrip().split(' ')))
@@ -36,6 +44,9 @@ class Obj(object):
                 pass
 
     def draw(self):
+        """
+        Custom drawing function to allow translation and rotation on each model
+        """
         glPushMatrix()
         x, y, z = self.position
         xrot, yrot, zrot = self.rotation
@@ -47,12 +58,20 @@ class Obj(object):
         glPopMatrix()
 
 
-class Material(object):
-    def __init__(self, name):
-        self.name = name
-
-
 class MaterialReader:
     def __init__(self, filename):
+        """
+        Class to read a material file associated with the model
+        :param filename: the path of the file
+        """
         self.file = filename
         self.materials = {}  # Storage for all materials
+
+
+class Material(object):
+    def __init__(self, name):
+        """
+        object for storing information about a specific material
+        :param name: the name of the material
+        """
+        self.name = name
