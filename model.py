@@ -10,6 +10,8 @@ class Obj(object):
         self.vertex_list, self.normals = [], []  # Extracting vertices from a .obj file
         self.mats = MaterialReader(material_file) if material_file is not None else None
 
+        self.position, self.rotation = [0, 0, 0], [0, 0, 0]
+
         self.import_model()
 
     def import_model(self):
@@ -32,6 +34,17 @@ class Obj(object):
 
             except IndexError:
                 pass
+
+    def draw(self):
+        glPushMatrix()
+        x, y, z = self.position
+        xrot, yrot, zrot = self.rotation
+        glTranslatef(x, y, z)
+        glRotatef(xrot, 1, 0, 0)
+        glRotatef(yrot, 0, 1, 0)
+        glRotatef(zrot, 0, 0, 1)
+        self.batch.draw()
+        glPopMatrix()
 
 
 class Material(object):

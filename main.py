@@ -9,6 +9,8 @@ class Window(pyglet.window.Window):
         super(Window, self).__init__(width, height, title, resizable)
         self.model = model.Obj('test_models/ak.obj', 'test_models/ak.mtl')
 
+        pyglet.clock.schedule(self.update)  # Schedule the update function
+
     @staticmethod
     def set_projection():
         glMatrixMode(GL_PROJECTION)
@@ -29,13 +31,17 @@ class Window(pyglet.window.Window):
     def set2d(self):
         pass  # Not needed quite yet
 
+    def update(self, dt):
+        pass
+
     def on_draw(self):
         self.clear()
         self.set3d()
 
         glTranslatef(0, 0, -10)  # Move the camera back to see the model
-        self.model.batch.draw()
 
+        self.model.rotation[0] += 2
+        self.model.draw()
 
 if __name__ == '__main__':
     window = Window(400, 400, 'Hello World!', True)
