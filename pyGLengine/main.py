@@ -1,8 +1,8 @@
-from pyglet.gl import *
-from pyglet.window import key
 import math
 
 import model
+from pyglet.gl import *
+from pyglet.window import key
 
 
 class Player:
@@ -122,11 +122,13 @@ class Window(pyglet.window.Window):
         glTranslatef(-x, -y, -z)  # Factor in player's position
 
         glTranslatef(0, 0, -10)  # Move the camera back to see the model
-        self.model.rotation[1] += 2  # Rotate the model by 2 degrees on the y axis per update
+        self.model.rotation[1] += 0.1  # Rotate the model by 2 degrees on the y axis per update
         self.model.draw()
 
 
 if __name__ == '__main__':
     window = Window(400, 400, 'Hello World!', True)
     glClearColor(0.2, 0.5, 0.8, 1)
+    glEnable(GL_CULL_FACE)
+    glEnable(GL_DEPTH_TEST)
     pyglet.app.run()
